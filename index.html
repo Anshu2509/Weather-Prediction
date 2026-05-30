@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Forecast App</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4">
+
+  <!-- ✅ Animated Background -->
+  <div class="bg-animation">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="rain"></div>
+  </div>
+
+  <!-- ✅ Alerts Modal -->
+  <div id="alertModal" class="modal hidden">
+    <div class="modal-box fade-in">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-bold">⚠ Weather Alert</h2>
+        <button id="closeAlert" class="close-btn">✖</button>
+      </div>
+      <p id="alertText" class="text-sm text-gray-200 leading-relaxed"></p>
+    </div>
+  </div>
+
+  <div class="app-card w-full max-w-md p-6 sm:p-8 rounded-3xl fade-in relative z-10">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-wide">🌤 Weather App</h1>
+        <p class="text-sm text-gray-300">Live weather + AQI + Forecast</p>
+      </div>
+
+      <button id="themeToggle" class="icon-btn" title="Toggle Theme">🌙</button>
+    </div>
+
+    <!-- Search -->
+    <div class="flex gap-2 mb-4">
+      <input
+        type="text"
+        id="cityInput"
+        class="weather-input flex-grow p-3 rounded-xl text-white placeholder-gray-400 focus:outline-none"
+        placeholder="Enter city name..."
+      />
+      <button id="searchButton" class="glow-btn p-3 rounded-xl icon-btn-2" title="Search">🔍</button>
+    </div>
+
+    <!-- Auto Detect -->
+    <button id="locationButton" class="w-full location-btn mb-4">
+      📍 Use My Current Location
+    </button>
+
+    <!-- Loading -->
+    <div id="loading" class="hidden flex justify-center items-center h-20 fade-in">
+      <div class="loader"></div>
+    </div>
+
+    <!-- Error -->
+    <div id="errorMessage"
+      class="hidden text-center text-red-300 p-4 bg-red-900/40 border border-red-500/30 rounded-xl fade-in">
+      <p id="errorText"></p>
+    </div>
+
+    <!-- ✅ Current Weather -->
+    <div id="weatherResult" class="hidden space-y-5 fade-in">
+      <div class="text-center">
+        <h2 id="locationName" class="text-2xl font-bold"></h2>
+        <div id="weatherIcon" class="w-24 h-24 mx-auto my-2 drop-shadow-xl"></div>
+        <p id="currentTemp" class="text-6xl font-extrabold temp-glow"></p>
+        <p id="weatherDescription" class="text-lg text-gray-200 capitalize mt-1"></p>
+      </div>
+
+      <!-- ✅ Extra Cards -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="stat-card text-center">
+          <p class="text-sm text-gray-400">Min / Max</p>
+          <p id="minMaxTemp" class="text-lg font-semibold"></p>
+        </div>
+
+        <div class="stat-card text-center">
+          <p class="text-sm text-gray-400">Humidity</p>
+          <p id="humidity" class="text-lg font-semibold"></p>
+        </div>
+
+        <div class="stat-card text-center">
+          <p class="text-sm text-gray-400">Wind Speed</p>
+          <p id="windSpeed" class="text-lg font-semibold"></p>
+        </div>
+
+        <div class="stat-card text-center">
+          <p class="text-sm text-gray-400">Feels Like</p>
+          <p id="feelsLike" class="text-lg font-semibold"></p>
+        </div>
+      </div>
+
+      <!-- ✅ AQI + Sunrise Sunset -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="stat-card text-center">
+          <p class="text-sm text-gray-400">AQI</p>
+          <p id="aqi" class="text-lg font-semibold"></p>
+          <p id="aqiText" class="text-xs text-gray-300"></p>
+        </div>
+
+        <div class="stat-card text-center">
+          <p class="text-sm text-gray-400">Sunrise / Sunset</p>
+          <p id="sunTimes" class="text-sm font-semibold"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Hourly Forecast -->
+    <div id="hourlySection" class="hidden fade-in mt-6">
+      <h3 class="text-lg font-bold mb-3 text-center">⏰ Next 24 Hours</h3>
+      <div id="hourlyScroll" class="hourly-scroll"></div>
+    </div>
+
+    <!-- ✅ Graph -->
+    <div id="graphSection" class="hidden fade-in mt-6">
+      <h3 class="text-lg font-bold mb-3 text-center">📈 Temperature Graph</h3>
+      <div class="graph-card">
+        <canvas id="tempChart"></canvas>
+      </div>
+    </div>
+
+    <!-- ✅ 5 Day Forecast -->
+    <div id="forecastSection" class="hidden fade-in mt-6">
+      <h3 class="text-lg font-bold mb-3 text-center">📅 5-Day Forecast</h3>
+      <div id="forecastGrid" class="grid grid-cols-2 gap-3"></div>
+    </div>
+
+    <p class="text-center text-xs text-gray-400 mt-6">
+      Made with ❤️ using OpenWeatherMap
+    </p>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

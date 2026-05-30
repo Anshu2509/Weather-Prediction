@@ -1,0 +1,247 @@
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top left, #1e3a8a, #0f172a 55%, #020617);
+  overflow-x: hidden;
+  color: white;
+  position: relative;
+}
+
+/* ✅ Background Animation */
+.bg-animation {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  width: 200px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50px;
+  filter: blur(1px);
+  box-shadow: 60px 10px 0 rgba(255, 255, 255, 0.08),
+              120px 0px 0 rgba(255, 255, 255, 0.06);
+  animation: moveClouds 18s linear infinite;
+}
+
+.cloud1 { top: 10%; left: -250px; animation-duration: 25s; }
+.cloud2 { top: 25%; left: -300px; opacity: 0.7; animation-duration: 30s; }
+.cloud3 { top: 40%; left: -280px; opacity: 0.5; animation-duration: 35s; }
+
+@keyframes moveClouds {
+  from { transform: translateX(-300px); }
+  to { transform: translateX(140vw); }
+}
+
+.rain {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 2px 20px;
+  opacity: 0.2;
+  animation: rainFall 0.5s linear infinite;
+}
+
+@keyframes rainFall {
+  from { background-position: 0 0; }
+  to { background-position: 0 20px; }
+}
+
+/* ✅ App Card */
+.app-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+}
+
+/* Input */
+.weather-input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.weather-input:focus {
+  border-color: rgba(59, 130, 246, 0.95);
+  box-shadow: 0px 0px 18px rgba(59, 130, 246, 0.7);
+}
+
+/* Buttons */
+.glow-btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8);
+  box-shadow: 0px 0px 20px rgba(59, 130, 246, 0.55);
+  transition: all 0.25s ease;
+}
+
+.glow-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0px 0px 35px rgba(59, 130, 246, 0.85);
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px 14px;
+  border-radius: 14px;
+  transition: 0.25s;
+}
+
+.icon-btn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+.location-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 12px;
+  border-radius: 16px;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.location-btn:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0px 0px 22px rgba(59, 130, 246, 0.35);
+}
+
+/* Loader */
+.loader {
+  border: 4px solid rgba(255, 255, 255, 0.18);
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0px); }
+}
+
+.temp-glow {
+  text-shadow: 0px 0px 20px rgba(59, 130, 246, 0.75);
+}
+
+/* Cards */
+.stat-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 16px;
+  transition: all 0.25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 0px 25px rgba(59, 130, 246, 0.25);
+}
+
+/* Forecast */
+.forecast-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 18px;
+  padding: 12px;
+  text-align: center;
+  transition: 0.25s ease;
+}
+
+.forecast-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 0px 25px rgba(59, 130, 246, 0.25);
+}
+
+/* Hourly Scroll */
+.hourly-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-behavior: smooth;
+}
+
+.hourly-scroll::-webkit-scrollbar { height: 6px; }
+.hourly-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.hour-card {
+  min-width: 90px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 10px;
+  text-align: center;
+  transition: 0.25s;
+}
+
+.hour-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 0px 20px rgba(59, 130, 246, 0.25);
+}
+
+/* Graph */
+.graph-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+/* ✅ Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-box {
+  width: 92%;
+  max-width: 420px;
+  border-radius: 18px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.close-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.14);
+  padding: 6px 10px;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+.close-btn:hover { transform: scale(1.05); }
