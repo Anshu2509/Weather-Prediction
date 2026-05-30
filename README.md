@@ -238,19 +238,6 @@ https://api.openweathermap.org/data/2.5/onecall
 
 ---
 
-## 🔮 Future Enhancements
-
-- Weekly weather forecast
-- Multiple language support
-- Weather maps integration
-- Progressive Web App (PWA)
-- Offline support
-- Weather history analytics
-- Favorite cities
-- Temperature unit conversion (°C/°F)
-- Push notifications
-
----
 
 ## 🤝 Contributing
 
